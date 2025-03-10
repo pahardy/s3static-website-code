@@ -2,7 +2,7 @@ stages:
     - remove-old-index-stage
     - add-new-index-stage
 variables:
-    REGION: "us-east=1"
+    REGION: "us-east-1"
 
 remove-old-index-job:
     stage: remove-old-index-stage
