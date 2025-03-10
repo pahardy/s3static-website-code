@@ -1,0 +1,21 @@
+stages:
+    - remove-old-index-stage
+    - add-new-index-stage
+
+remove-old-index-job:
+    stage: remove-old-index-stage
+    tags:
+        - s3
+        - static
+    before_script:
+        - # confirm s3 connectivity
+    script:
+        #remove old index file
+
+add-new-index-job:
+    stage: add-new-index-stage
+    tags:
+        - s3
+        - static
+    script:
+        - #upload new index file
