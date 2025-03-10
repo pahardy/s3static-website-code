@@ -1,6 +1,8 @@
 stages:
     - remove-old-index-stage
     - add-new-index-stage
+variables:
+    REGION: "us-east=1"
 
 remove-old-index-job:
     stage: remove-old-index-stage
@@ -8,13 +10,13 @@ remove-old-index-job:
         - s3
         - static
     before_script:
-        - aws configure set aws_default_region $AWS_DEFAULT_REGION
-        - aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
-        - aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
-        - aws configure set aws_session_token $AWS_SESSION_TOKEN
-        - aws s3 ls  #confirm connectivity to the S3 buckets in the relevant region where the site is hosted
+        #- aws configure set aws_default_region $AWS_DEFAULT_REGION
+        #- aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
+        #- aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
+        #- aws configure set aws_session_token $AWS_SESSION_TOKEN
+        - aws s3 ls --region $REGION #confirm connectivity to the S3 buckets in the relevant region where the site is hosted
     script:
-        - aws s3 rm s3://s3staticwebmarch102025/index.html  # remove the old index.html file
+        - aws s3 rm s3://s3staticwebmarch102025/index.html --region $REGION # remove the old index.html file
 
 add-new-index-job:
     stage: add-new-index-stage
@@ -22,4 +24,4 @@ add-new-index-job:
         - s3
         - static
     script:
-        - aws s3 cp index.html s3://s3staticwebmarch102025/index.html  # copy over the new index.html file
+        - aws s3 cp index.html s3://s3staticwebmarch102025/index.html --region $REGION # copy over the new index.html file
