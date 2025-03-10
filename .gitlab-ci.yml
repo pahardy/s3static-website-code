@@ -16,7 +16,7 @@ remove-old-index-job:
         #- aws configure set aws_session_token $AWS_SESSION_TOKEN
         - aws s3 ls --region $REGION #confirm connectivity to the S3 buckets in the relevant region where the site is hosted
     script:
-        - aws s3 rm s3://s3staticwebmarch102025/index.html --region $REGION # remove the old index.html file
+        - aws s3 rm s3:/statics3sitemarch10tf/index.html --region $REGION # remove the old index.html file
 
 add-new-index-job:
     stage: add-new-index-stage
@@ -24,4 +24,4 @@ add-new-index-job:
         - s3
         - static
     script:
-        - aws s3 cp index.html s3://s3staticwebmarch102025/index.html --region $REGION # copy over the new index.html file
+        - aws s3 cp index.html s3://statics3sitemarch10tf/index.html --region $REGION # copy over the new index.html file
