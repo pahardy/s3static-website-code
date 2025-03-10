@@ -8,9 +8,13 @@ remove-old-index-job:
         - s3
         - static
     before_script:
-        - # confirm s3 connectivity
+        - aws configure set aws_default_region $AWS_DEFAULT_REGION
+        - aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
+        - aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
+        - aws configure set aws_session_token $AWS_SESSION_TOKEN
+        - aws s3 ls  #confirm connectivity to the S3 buckets in the relevant region where the site is hosted
     script:
-        #remove old index file
+        - aws s3 rm s3://s3staticwebmarch102025/index.html  # remove the old index.html file
 
 add-new-index-job:
     stage: add-new-index-stage
@@ -18,4 +22,4 @@ add-new-index-job:
         - s3
         - static
     script:
-        - #upload new index file
+        - aws s3 cp index.html s3://s3staticwebmarch102025/index.html  # copy over the new index.html file
